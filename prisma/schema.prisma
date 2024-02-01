@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Cursos {
+  id         String   @id @default(cuid())
+  tema       String
+  observacao String?
+  status     String   @default("Fazendo...")
+  etapas     Etapas[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Etapas {
+  id    Int    @id @default(autoincrement())
+  nome  String
+  texto String @default("pending")
+
+  Cursos     Cursos   @relation(fields: [curso_id], references: [id], onDelete: Cascade)
+  curso_id   String
+  created_at DateTime @default(now())
+}

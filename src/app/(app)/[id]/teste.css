@@ -1,0 +1,7 @@
+h1 {
+    @apply !text-foreground;
+}
+
+h2 {
+    @apply !text-foreground;
+}
