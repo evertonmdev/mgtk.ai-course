@@ -20,6 +20,14 @@ const TableCourses: React.FunctionComponent = (props) => {
         return (
           <IdContent id={course.id} />
         )
+      case "tema":
+        return (
+          <p>{course.tema}</p>
+        )
+      case "observacao":
+        return (
+          <p>{course.observacao || "nenhuma"}</p>
+        )
       case "status":
         return (
           <StatusColumn status={course.status} />
@@ -31,7 +39,7 @@ const TableCourses: React.FunctionComponent = (props) => {
       case "actions":
         return <ActionsColumn id={course.id} />
       default:
-        return course[columnKey].toString()
+        return course?.[columnKey]?.toString() || "N/A"
     }
   }, [])
 
