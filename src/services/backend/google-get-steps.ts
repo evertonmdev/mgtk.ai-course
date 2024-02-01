@@ -14,10 +14,10 @@ export async function googleGetSteps({ thema, observations }: GoogleGetStepsProp
     const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
     const generationConfig = {
-        temperature: 1,
-        topK: 1,
-        topP: 1,
-        maxOutputTokens: 4056,
+        temperature: 0,
+        topK: 40,
+        topP: 0,
+        maxOutputTokens: 1028,
     };
 
     const safetySettings = [

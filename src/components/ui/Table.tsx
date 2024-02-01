@@ -1,6 +1,5 @@
 "use client";
 import { getAllCoursesType } from '@/services/backend/get-all-courses';
-import { getAllCourses_C } from '@/services/get-all';
 import { Skeleton, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import * as React from 'react';
 
@@ -54,9 +53,9 @@ const TableCourses: React.FunctionComponent = (props) => {
   )
   return (
     <>
-      <section>
+      <section className='max-lg:w-full w-2/3'>
         {
-          cols.length > 0 && <Table isCompact isHeaderSticky>
+          cols.length > 0 && <Table className='w-full' isCompact isHeaderSticky>
             <TableHeader>
               {
                 cols.map((col, i) => <TableColumn align="center" key={`${i}_${col}`}>{col}</TableColumn>)

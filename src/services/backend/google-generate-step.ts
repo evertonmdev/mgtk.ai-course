@@ -20,10 +20,10 @@ export async function googleGenerateStep({ etapa, titulo, obsservation }: Google
     const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
     const generationConfig = {
-        temperature: 0.9,
+        temperature: 0,
         topK: 40,
-        topP: 0.15,
-        maxOutputTokens: 32000,
+        topP: 0,
+        maxOutputTokens: 10000,
     };
 
     const safetySettings = [

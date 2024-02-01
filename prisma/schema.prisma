@@ -21,9 +21,9 @@ model Cursos {
 }
 
 model Etapas {
-  id    Int    @id @default(autoincrement())
+  id    Int     @id @default(autoincrement())
   nome  String
-  texto String @default("pending")
+  texto String? @db.LongText
 
   Cursos     Cursos   @relation(fields: [curso_id], references: [id], onDelete: Cascade)
   curso_id   String

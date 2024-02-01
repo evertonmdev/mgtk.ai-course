@@ -10,6 +10,7 @@ interface IProps {
 
 const App: React.FunctionComponent<IProps> = async ({ params: { id } }) => {
     const course = await getCourse({ id });
+    console.log(course)
 
     const pureText = course?.etapas.map((etapa) => etapa.texto).join("<br>") || ""
 

@@ -57,7 +57,7 @@ const FormCard: React.FunctionComponent = () => {
     }
 
     return (
-        <Card className="max-lg:w-full w-1/3 h-fit min-h-[70%] py-10">
+        <Card className="max-lg:w-full w-1/3 h-fit min-h-[400px] py-10">
             <CardHeader className="w-full justify-between items-center">
                 <h3 className="font-bold text-xl text-foreground-600">O que pretende criar hoje?</h3>
                 <Button isIconOnly variant="ghost" onClick={() => {
@@ -70,7 +70,7 @@ const FormCard: React.FunctionComponent = () => {
                 </Button>
             </CardHeader>
             <CardBody>
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-start items-center gap-3">
+                <form onSubmit={handleSubmit(onSubmit)} className="flex h-fit flex-col justify-start items-center gap-3">
                     {
                         !status.active ? (
                             <>
