@@ -55,7 +55,7 @@ const TableCourses: React.FunctionComponent = (props) => {
     <>
       <section className='max-lg:w-full w-2/3'>
         {
-          cols.length > 0 && <Table className='w-full' isCompact isHeaderSticky>
+          cols.length > 0 && <Table className='w-full' isStriped isHeaderSticky>
             <TableHeader>
               {
                 cols.map((col, i) => <TableColumn align="center" key={`${i}_${col}`}>{col}</TableColumn>)
