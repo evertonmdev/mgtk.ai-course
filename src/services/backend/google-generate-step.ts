@@ -46,8 +46,8 @@ export async function googleGenerateStep({ etapa, titulo, obsservation }: Google
     ];
 
     const prompt = obsservation ?
-        `Instruções: Não use Markdown, use html por exemplo <h1> para titulos <h2> para subtitulos <p> para paragrafos e assim por diante você não precisa iniciar com <!DOCTYPE html> e nem da tag html, você é um criador de ebooks, vou te pedir coisas por etapas.\n\nImportante!: ${obsservation}\n\nTema do ebook: ${titulo}\nEtapa: ${etapa} \n\n`
-        : `Instruções: Não use Markdown, use html por exemplo <h1> para titulos <h2> para subtitulos <p> para paragrafos e assim por diante você não precisa iniciar com <!DOCTYPE html> e nem da tag html, você é um criador de ebooks, vou te pedir coisas por etapas.\n\nTema do ebook: ${titulo}\nEtapa: ${etapa} \n\n`
+        `Instruções: Não use Markdown, use html por exemplo <h1> para titulos <h2> para subtitulos <p> para paragrafos <code> para codigos | bash ou qualquer outra linguagem e assim por diante você não precisa iniciar com <!DOCTYPE html> e nem da tag html, você é um criador de ebooks, vou te pedir coisas por etapas.\n\nImportante!: ${obsservation}\n\nTema do ebook: ${titulo}\nEtapa: ${etapa} \n\n`
+        : `Instruções: Não use Markdown, use html por exemplo <h1> para titulos <h2> para subtitulos <p> para paragrafos, <code> para codigos | bash ou qualquer outra linguagem e assim por diante você não precisa iniciar com <!DOCTYPE html> e nem da tag html, você é um criador de ebooks, vou te pedir coisas por etapas.\n\nTema do ebook: ${titulo}\nEtapa: ${etapa} \n\n`
     const parts = [
         { text: prompt },
     ];
