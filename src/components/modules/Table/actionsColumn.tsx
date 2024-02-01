@@ -1,4 +1,5 @@
 import { deleteCourse_C } from '@/services/delete-course';
+import { downloadCourse } from '@/services/download-course';
 import { Button, Tooltip } from '@nextui-org/react';
 import { Download, Trash } from 'lucide-react';
 import * as React from 'react';
@@ -41,13 +42,21 @@ const ActionsColumn: React.FunctionComponent<IActionsColumnProps> = ({ id }) => 
                 </Button>
             </Tooltip>
             <Tooltip content="Baixar" color='secondary'>
-                <Button onClick={() => {
+                <Button onClick={async () => {
+                    const res = await downloadCourse({ id })
+                    const url = window.URL.createObjectURL(res.data)
+                    const a = document.createElement('a')
+                    a.href = url
+                    a.download = "curso.pdf"
+                    document.body.appendChild(a)
+                    a.click()
+                    window.URL.revokeObjectURL(url)
                     toast.info("Download iniciado!")
                 }} size="sm" isIconOnly color="secondary" variant="flat" >
                     <Download size={15} />
                 </Button>
             </Tooltip>
-        </div>
+        </div >
     );
 };
 
