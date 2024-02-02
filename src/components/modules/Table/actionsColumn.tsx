@@ -8,9 +8,10 @@ import { RootContext } from '../Contexts/RootContext';
 
 interface IActionsColumnProps {
     id: string;
+    name: string;
 }
 
-const ActionsColumn: React.FunctionComponent<IActionsColumnProps> = ({ id }) => {
+const ActionsColumn: React.FunctionComponent<IActionsColumnProps> = ({ id, name }) => {
     const { triggerReload } = React.useContext(RootContext)
     return (
         <div className='w-full flex gap-1 justify-center items-center'>
@@ -47,7 +48,7 @@ const ActionsColumn: React.FunctionComponent<IActionsColumnProps> = ({ id }) => 
                     const url = window.URL.createObjectURL(res.data)
                     const a = document.createElement('a')
                     a.href = url
-                    a.download = "curso.pdf"
+                    a.download = `${name.replaceAll(" ", "-").toLowerCase()}.pdf`
                     document.body.appendChild(a)
                     a.click()
                     window.URL.revokeObjectURL(url)

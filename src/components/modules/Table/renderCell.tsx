@@ -31,7 +31,7 @@ export const useRenderCell = () => {
             case "etapas":
                 return <EtapasColumn etapas={course.etapas} />
             case "actions":
-                return <ActionsColumn id={course.id} />
+                return <ActionsColumn id={course.id} name={course.tema} />
             default:
                 return course?.[columnKey]?.toString() || "N/A"
         }
