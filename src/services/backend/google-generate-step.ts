@@ -22,9 +22,9 @@ export async function googleGenerateStep({ etapa, titulo, obsservation }: Google
         const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
         const generationConfig = {
-            temperature: 0.1,
+            temperature: 0.35,
             topK: 40,
-            topP: 0.1,
+            topP: 0.3,
             maxOutputTokens: 10000,
         };
 
@@ -50,7 +50,8 @@ export async function googleGenerateStep({ etapa, titulo, obsservation }: Google
         const prompt = obsservation ?
             `Instruções: Não use Markdown, use HTML. Por exemplo, <h1> para títulos, <h2> para subtítulos, <p> para parágrafos, <code> para destacar pastas ou coisas desse gênero. Use a tag <codigo> quando for usar exemplos de codigo ou templates, Use a tag <comando> quando for destacar comandos.
             Não é necessário iniciar com <!DOCTYPE html> e nem com a tag html. Você é um criador de ebooks, vou te pedir Paginas por etapas.
-            Importante!: ${obsservation}
+            Importante!: ${obsservation} 
+            Importante!: Seja Original em seu conteudo
             
             Tema do ebook: ${titulo}
             Etapa: ${etapa}

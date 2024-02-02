@@ -59,6 +59,7 @@ async function startStack({ id }: { id: string }) {
         let stacks_queue = []
 
         for (const etapa of etapas) {
+            console.log("Criando conteudo da etapa", etapa.nome)
             stacks_queue.push(createContent({
                 id: etapa.id,
                 nome_etapa: etapa.nome,
