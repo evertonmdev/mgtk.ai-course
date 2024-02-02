@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 export const getStatusStack = async (id: string) => {
     const stack = await prisma.cursos.findUnique({
@@ -11,7 +12,6 @@ export const getStatusStack = async (id: string) => {
         console.log("Stack não encontrado")
         return null
     }
-
 
     return stack.status
 }

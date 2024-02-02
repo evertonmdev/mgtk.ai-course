@@ -1,10 +1,12 @@
 "use client";
 import { IFormCourseCreateData } from '@/app/(backend)/api/create-course/route';
-import { createCourse } from '@/services/create-course';
-import { getStatus } from '@/services/get-status';
-import { startStack } from '@/services/start-stack';
+
+import { createCourse_C } from '@/services/client/create-course';
+import { getStatus_C } from '@/services/client/get-status';
+import { startStack_C } from '@/services/client/start-stack';
+
 import { Button, Card, CardBody, CardHeader, Input, Progress } from '@nextui-org/react';
-import { Moon, MoonIcon, Sun, SunIcon } from 'lucide-react';
+import { MoonIcon, SunIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -29,20 +31,19 @@ const FormCard: React.FunctionComponent = () => {
     const onSubmit = async (data: IFormCourseCreateData) => {
         try {
             setStatus((prev) => ({ ...prev, active: true }))
-            const res = await createCourse(data)
+            const res = await createCourse_C(data)
             if (res?.stack.id) {
-                await startStack({ id: res?.stack?.id })
+                await startStack_C({ id: res?.stack?.id })
 
-                for (let i = 0; i < 100; i++) {
-                    await Sleep(600)
-                    const status = await getStatus({ id: res?.stack?.id })
-                    console.log(status)
+                for (let i = 0; i < 500; i++) {
+                    await Sleep(1000)
+                    const status = await getStatus_C({ id: res?.stack?.id })
                     if (status?.status) {
                         setStatus((prev) => ({ ...prev, status: status?.status }))
                     }
                     if (status?.status === "Sucesso!") {
-                        setStatus((prev) => ({ ...prev, success: true }))
                         triggerReload()
+                        setStatus((prev) => ({ ...prev, success: true }))
                         break;
                     }
                 }
@@ -84,8 +85,8 @@ const FormCard: React.FunctionComponent = () => {
                                 />
                             </>
                         ) : (
-                            <div className="w-[60%] h-[100px] flex justify-center items-center flex-col">
-                                <h2 className="text-xl font-semibold mb-5">{
+                            <div className="w-[60%] h-fit min-h-[100px] flex justify-center items-center flex-col">
+                                <h2 className="text-lg font-semibold mb-5">{
                                     status.status
                                 }</h2>
                                 <Progress size="sm" value={
@@ -93,7 +94,7 @@ const FormCard: React.FunctionComponent = () => {
                                         status.status === "Criando passo a passo..." ? 20 :
                                             status.status === "Criando conteudo..." ? 40 :
                                                 status.status === "Sucesso!" ? 100 :
-                                                    0
+                                                    60
                                 } />
                             </div>
                         )

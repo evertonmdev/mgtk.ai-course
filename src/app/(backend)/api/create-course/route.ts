@@ -1,6 +1,6 @@
 "use server";
-
-import prisma from "@/lib/prisma";
+import { createCourse } from "@/services/backend/create-course";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -30,10 +30,6 @@ export async function POST(request: NextRequest) {
     const data = { tema: body.tema } as IFormCourseCreateData
     if (body.observacao) data.observacao = body.observacao
 
-
-    const stack = await prisma.cursos.create({
-        data
-    })
-
-    return NextResponse.json({ stack })
+    const stack = await createCourse(data)
+    return NextResponse.json({ revalidatePath: true, stack, now: Date.now() })
 }

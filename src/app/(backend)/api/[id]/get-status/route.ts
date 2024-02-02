@@ -1,6 +1,7 @@
 "use server";
 
 import { getStatusStack } from "@/services/backend/get-status-stack";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 interface IContext {
@@ -13,9 +14,14 @@ export interface IResponseGetStatus {
     status: string
 }
 
-export async function GET(request: NextRequest, ctx: IContext) {
+export async function GET(_request: NextRequest, ctx: IContext) {
     const { id } = ctx.params
     const status = await getStatusStack(id)
 
-    return NextResponse.json({ status })
+    if (status === "Sucesso!") {
+        revalidatePath("/(app)/")
+        return NextResponse.json({ revalidatePath: true, status, now: Date.now() })
+    }
+
+    return NextResponse.json({ revalidatePath: false, status, now: Date.now() })
 }

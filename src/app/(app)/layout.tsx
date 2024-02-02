@@ -25,7 +25,6 @@ export default function RootLayout({
           <RootContextProvider>
             {children}
           </RootContextProvider>
-
           <ToasterContainer />
         </ThemeProvider>
         <Analytics />

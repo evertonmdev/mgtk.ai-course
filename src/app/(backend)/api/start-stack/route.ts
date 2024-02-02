@@ -10,13 +10,14 @@ export interface IRequestBodyStack {
     id: string
 }
 
+export type IStackStatus = "Criando passo a passo..." | "Criando conteudo..." | "Sucesso!" | "Falhou" | string
 
 export async function POST(request: NextRequest) {
     const body = await request.json() as IRequestBodyStack
     if (!body?.id) return NextResponse.json({ status: "id é obrigatório" })
 
     startStack({ id: body.id })
-    return NextResponse.json({ status: "iniated" })
+    return NextResponse.json({ status: "iniated", revalidatePath: true, now: Date.now() })
 }
 
 
@@ -26,76 +27,87 @@ async function startStack({ id }: { id: string }) {
             id
         },
     })
-
     if (stack === null) return console.log("Stack não encontrado");
 
-    const steps = await googleGetSteps({ thema: stack.tema, observations: stack.observacao })
+    try {
+        const steps = await googleGetSteps({ thema: stack.tema, observations: stack.observacao }) as string[]
 
-    console.log("Iniciando criação de etapas")
+        await updateStackStatus({ id: stack.id, status: "Criando passo a passo..." })
 
-    await prisma.cursos.update({
-        where: {
-            id: stack.id
-        },
-        data: {
-            status: "Criando passo a passo..."
-        }
-    })
-
-    for (const step of steps) {
-        await prisma.etapas.create({
-            data: {
-                curso_id: stack.id,
-                nome: step,
-            },
-        });
-    }
-
-    console.log("Etapas criada com sucesso")
-    await prisma.cursos.update({
-        where: {
-            id: stack.id
-        },
-        data: {
-            status: "Criando conteudo..."
-        }
-    })
-
-    const etapas = await prisma.etapas.findMany({
-        where: {
-            curso_id: stack.id
-        },
-        orderBy: {
-            created_at: "asc"
-        }
-    })
-
-    console.log(etapas.map(e => e.nome))
-
-    console.log("Iniciando criação do conteudo das etapas")
-
-    await Promise.all(
-        etapas.map(async (e) => {
-            const conteudo = await googleGenerateStep({ etapa: e.nome, titulo: stack.tema, obsservation: stack.observacao })
-            return await prisma.etapas.update({
-                where: {
-                    id: e.id
-                },
+        for (const step of steps) {
+            await prisma.etapas.create({
                 data: {
-                    texto: conteudo
-                }
-            })
-        }),
-    )
+                    curso_id: stack.id,
+                    nome: step,
+                },
+            });
+        }
 
-    await prisma.cursos.update({
+        await updateStackStatus({ id: stack.id, status: "Criando conteudo..." })
+
+        const etapas = await prisma.etapas.findMany({
+            where: {
+                curso_id: stack.id
+            },
+            orderBy: {
+                created_at: "asc"
+            }
+        })
+
+        console.log(etapas.map(e => e.nome))
+
+        let stacks_queue = []
+
+        for (const etapa of etapas) {
+            stacks_queue.push(createContent({
+                id: etapa.id,
+                nome_etapa: etapa.nome,
+                observacao: stack.observacao,
+                tema: stack.tema,
+                stack_id: stack.id
+            }))
+
+            if (stacks_queue.length > 6) {
+                await Promise.all(stacks_queue)
+                stacks_queue = []
+            }
+        }
+
+        await Promise.all(stacks_queue)
+        await updateStackStatus({ id: stack.id, status: "Sucesso!" })
+    } catch (error) {
+        console.log(error);
+        await updateStackStatus({ id: stack.id, status: "Falhou" })
+        return error;
+    }
+}
+
+
+async function createContent({ nome_etapa, tema, observacao, id, stack_id }: { nome_etapa: string, tema: string, observacao: string | null, id: number, stack_id: string }) {
+    await updateStackStatus({ id: stack_id, status: `Criando conteudo da etapa ${nome_etapa}` })
+    const conteudo = await googleGenerateStep({ etapa: nome_etapa, titulo: tema, obsservation: observacao }) as string
+    await prisma.etapas.update({
         where: {
-            id: stack.id
+            id
         },
         data: {
-            status: "Sucesso!"
+            texto: conteudo
         }
     })
 
-    console.log("Conteudo das etapas criado com sucesso")
+    return true
+}
+
+async function updateStackStatus({ id, status }: { id: string, status: IStackStatus }) {
+    console.log("Atualizando status do stack", id, status)
+    await prisma.cursos.update({
+        where: {
+            id
+        },
+        data: {
+            status
+        }
+    })
+
+    return true
 }

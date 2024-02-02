@@ -1,5 +1,6 @@
 "use server";
 import { deleteCourse } from "@/services/backend/delete-course";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 interface IContext {
@@ -8,8 +9,9 @@ interface IContext {
     }
 }
 
-export async function GET(request: NextRequest, ctx: IContext) {
+export async function GET(_request: NextRequest, ctx: IContext) {
     const { id } = ctx.params
     await deleteCourse(id)
-    return NextResponse.json({ status: "Deleted" })
+    revalidatePath("/(app)/")
+    return NextResponse.json({ revalidatePath: true, status: "Deleted", now: Date.now() })
 }

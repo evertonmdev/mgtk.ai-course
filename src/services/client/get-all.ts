@@ -1,5 +1,5 @@
 import { api } from "@/lib/api";
-import { getAllCoursesType } from "./backend/get-all-courses";
+import { getAllCoursesType } from "../backend/get-all-courses";
 
 
 export const getAllCourses_C = async () => {

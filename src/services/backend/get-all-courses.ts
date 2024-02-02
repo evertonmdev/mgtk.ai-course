@@ -1,3 +1,4 @@
+import { IStackStatus } from "@/app/(backend)/api/start-stack/route";
 import prisma from "@/lib/prisma";
 
 export const getAllCourses = async () => {
@@ -8,9 +9,9 @@ export const getAllCourses = async () => {
         include: {
             etapas: true
         }
-    })
+    }) || null
 
-    return stack
+    return stack as getAllCoursesType | null
 }
 
 export type getAllCoursesType = ({
@@ -25,7 +26,7 @@ export type getAllCoursesType = ({
     id: string;
     tema: string;
     observacao: string;
-    status: string;
+    status: IStackStatus;
     created_at: Date;
     updated_at: Date;
 })[]

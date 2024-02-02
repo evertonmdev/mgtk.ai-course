@@ -1,7 +1,7 @@
 "use client";
 import { getAllCoursesType } from "@/services/backend/get-all-courses";
-import { getAllCourses_C } from "@/services/get-all";
-import React, { createContext } from "react";
+import { getAllCourses_C } from "@/services/client/get-all";
+import React, { createContext, useEffect } from "react";
 
 interface IRootContext {
     reload: boolean
@@ -18,12 +18,8 @@ export const RootContext = createContext({} as IRootContext)
 export const RootContextProvider: React.FC<IRootContextProvider> = ({ children }) => {
     const [courses, setCourses] = React.useState<getAllCoursesType | null>(null)
 
-    React.useEffect(() => {
-        getAllCourses_C().then((data) => {
-            return setCourses(data);
-        }).catch(err => {
-            console.log(err)
-        })
+    useEffect(() => {
+        triggerReload()
     }, [])
 
     const triggerReload = () => {
