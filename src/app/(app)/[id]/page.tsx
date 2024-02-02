@@ -33,9 +33,7 @@ const App: React.FunctionComponent<IProps> = async ({ params: { id } }) => {
                 const content = $(el).html()
                 const text = $(el).text()
 
-
-                // if (ultimo_html.includes(`<${tag}>${content}</${tag}>`)) return
-
+                if (ultimo_html.includes(`<${tag}>${content}</${tag}>`)) return
                 ultimo_html = ""
                 switch (tag) {
                     case "p":
