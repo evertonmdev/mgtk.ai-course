@@ -56,25 +56,16 @@ async function startStack({ id }: { id: string }) {
 
         console.log(etapas.map(e => e.nome))
 
-        let stacks_queue = []
-
         for (const etapa of etapas) {
-            console.log("Criando conteudo da etapa", etapa.nome)
-            stacks_queue.push(createContent({
+            await createContent({
                 id: etapa.id,
                 nome_etapa: etapa.nome,
                 observacao: stack.observacao,
                 tema: stack.tema,
                 stack_id: stack.id
-            }))
-
-            if (stacks_queue.length >= 8) {
-                await Promise.all(stacks_queue)
-                stacks_queue = []
-            }
+            })
         }
 
-        await Promise.all(stacks_queue)
         await updateStackStatus({ id: stack.id, status: "Sucesso!" })
     } catch (error) {
         console.log(error);
@@ -86,7 +77,7 @@ async function startStack({ id }: { id: string }) {
 
 async function createContent({ nome_etapa, tema, observacao, id, stack_id }: { nome_etapa: string, tema: string, observacao: string | null, id: number, stack_id: string }) {
     await updateStackStatus({ id: stack_id, status: `Criando conteudo da etapa ${nome_etapa}` })
-    const conteudo = await googleGenerateStep({ etapa: nome_etapa, titulo: tema, obsservation: observacao }) as string
+    const conteudo = await googleGenerateStep({ etapa: nome_etapa, titulo: tema, obsservation: observacao, stack_id }) as string
     await prisma.etapas.update({
         where: {
             id

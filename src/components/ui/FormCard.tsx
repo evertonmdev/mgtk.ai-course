@@ -41,6 +41,15 @@ const FormCard: React.FunctionComponent = () => {
                     if (status?.status) {
                         setStatus((prev) => ({ ...prev, status: status?.status }))
                     }
+                    if (status?.status === "Falhou") {
+                        triggerReload()
+                        setStatus((prev) => ({ ...prev, error: true }))
+                        toast.error("Lamento, ocorreu um erro ao criar o curso.", {
+                            description: "As causas para isso podem ser variadas, mas o mais comum é a falta de recursos para criar o curso ou conteudo nocivo."
+                        })
+                        toast.info("Por favor, tente novamente daqui 2 minuots!")
+                        break;
+                    }
                     if (status?.status === "Sucesso!") {
                         triggerReload()
                         setStatus((prev) => ({ ...prev, success: true }))

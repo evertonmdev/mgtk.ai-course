@@ -1,4 +1,5 @@
 import { Env } from "@/lib/env";
+import prisma from '@/lib/prisma';
 import {
     GoogleGenerativeAI,
     HarmBlockThreshold,
@@ -13,10 +14,23 @@ interface GoogleGenerateStepProps {
     etapa: string;
     titulo: string;
     obsservation?: string | null;
+    stack_id: string;
 }
 
-export async function googleGenerateStep({ etapa, titulo, obsservation }: GoogleGenerateStepProps) {
+export async function googleGenerateStep({ etapa, titulo, obsservation, stack_id }: GoogleGenerateStepProps) {
     try {
+        const old_data = await prisma.etapas.findMany({
+            where: {
+                curso_id: stack_id
+            },
+            orderBy: {
+                created_at: "asc"
+            }
+        })
+
+        let old_data_text = ""
+
+        if (old_data) old_data_text = old_data.map(e => e.texto).filter((e) => e && e).join('<br>')
 
         const genAI = new GoogleGenerativeAI(API_KEY);
         const model = genAI.getGenerativeModel({ model: MODEL_NAME });
@@ -51,18 +65,26 @@ export async function googleGenerateStep({ etapa, titulo, obsservation }: Google
             `Instruções: Não use Markdown, use HTML. Por exemplo, <h1> para títulos, <h2> para subtítulos, <p> para parágrafos, <code> para destacar pastas ou coisas desse gênero. Use a tag <codigo> quando for usar exemplos de codigo ou templates, Use a tag <comando> quando for destacar comandos.
             Não é necessário iniciar com <!DOCTYPE html> e nem com a tag html. Você é um criador de ebooks, vou te pedir Paginas por etapas.
             Importante!: ${obsservation} 
-            Importante!: Seja Original em seu conteudo
-            
+            Importante!: Seja Original em seu conteudo, não é necessário usar codigo se o tema não tem nada haver com codigo
+            Importante!: Continue o contexto! não use coisas como "clique aqui para continuar para proxima etapa" ou "clique aqui para ir para a proxima etapa"
+        
             Tema do ebook: ${titulo}
             Etapa: ${etapa}
             `
             : `Instruções: Não utilize Markdown. Utilize HTML, por exemplo, <h1> para títulos, <h2> para subtítulos, <p> para parágrafos, <code> para destacar pastas ou coisas desse gênero. Use a tag <codigo> quando for usar exemplos de codigo ou templates, Use a tag <comando> quando for destacar comandos.
             Não é necessário iniciar com <!DOCTYPE html> e nem com a tag html. Você é um criador de ebooks, vou te pedir Paginas por etapas.
+            Importante!: Seja Original em seu conteudo, não é necessário usar codigo se o tema não tem nada haver com codigo
+            Importante!: Continue o contexto! não use coisas como "clique aqui para continuar para proxima etapa" ou "clique aqui para ir para a proxima etapa"
+        
             Tema do ebook: ${titulo}
             Etapa: ${etapa}
             `
+
+
+        console.log(old_data_text)
+
         const parts = [
-            { text: prompt },
+            { text: `${old_data_text} \n\n ${prompt}` },
         ];
 
         const result = await model.generateContent({
