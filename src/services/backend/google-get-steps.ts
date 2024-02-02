@@ -16,9 +16,9 @@ export async function googleGetSteps({ thema, observations }: GoogleGetStepsProp
         const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
         const generationConfig = {
-            temperature: 0.25,
+            temperature: 0.1,
             topK: 40,
-            topP: 0,
+            topP: 0.1,
             maxOutputTokens: 1028,
         };
 

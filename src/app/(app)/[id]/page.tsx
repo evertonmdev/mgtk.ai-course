@@ -20,7 +20,6 @@ const App: React.FunctionComponent<IProps> = async ({ params: { id } }) => {
     const renders: React.ReactNode[] = []
 
     for (const etapa of course.etapas) {
-
         const html = etapa.texto
         let ultimo_html = ""
 
@@ -124,12 +123,9 @@ const App: React.FunctionComponent<IProps> = async ({ params: { id } }) => {
                         })
                         // renders.push(<div dangerouslySetInnerHTML={{ __html: content as string }} />)
                     }
-
-
                 }
             })
         }
-
     }
 
     return (

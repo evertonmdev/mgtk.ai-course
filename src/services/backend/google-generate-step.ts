@@ -24,7 +24,7 @@ export async function googleGenerateStep({ etapa, titulo, obsservation }: Google
         const generationConfig = {
             temperature: 0.1,
             topK: 40,
-            topP: 0,
+            topP: 0.1,
             maxOutputTokens: 10000,
         };
 

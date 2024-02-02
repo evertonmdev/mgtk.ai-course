@@ -67,7 +67,7 @@ async function startStack({ id }: { id: string }) {
                 stack_id: stack.id
             }))
 
-            if (stacks_queue.length > 6) {
+            if (stacks_queue.length >= 3) {
                 await Promise.all(stacks_queue)
                 stacks_queue = []
             }
