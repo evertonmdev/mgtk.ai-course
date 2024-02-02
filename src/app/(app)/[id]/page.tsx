@@ -22,6 +22,7 @@ const App: React.FunctionComponent<IProps> = async ({ params: { id } }) => {
     for (const etapa of course.etapas) {
 
         const html = etapa.texto
+        let ultimo_html = ""
 
         if (html !== null) {
             const $ = cheerio.load(html)
@@ -32,19 +33,48 @@ const App: React.FunctionComponent<IProps> = async ({ params: { id } }) => {
                 const content = $(el).html()
                 const text = $(el).text()
 
+
+                // if (ultimo_html.includes(`<${tag}>${content}</${tag}>`)) return
+
+                ultimo_html = ""
                 switch (tag) {
                     case "p":
+                        ultimo_html = `<${tag}>${content}</${tag}>`
                         // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
                         renders.push(<p key={i} dangerouslySetInnerHTML={{ __html: content as string }} />)
                         break
-                    case "code":
-                        renders.push(<code key={i} className='before:content-none after:content-none'>
-                            <pre>
-                                {content}
+
+                    case "pre":
+                        ultimo_html = `<${tag}>${content}</${tag}>`
+                        renders.push(
+                            // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+                            <pre key={i} dangerouslySetInnerHTML={{ __html: content?.trim() as string }} />
+                        )
+                        break
+                    case "codigo": {
+                        ultimo_html = `<${tag}>${content}</${tag}>`
+                        renders.push(
+                            <pre key={i}>
+
+                                <code >
+                                    {content?.trim()}
+                                </code>
                             </pre>
-                        </code>)
+                        )
+                        break
+                    }
+                    case "comando":
+                        ultimo_html = `<${tag}>${content}</${tag}>`
+                        renders.push(
+                            <pre key={i}>
+                                <code>
+                                    {text}
+                                </code>
+                            </pre>
+                        )
                         break
                     case "ul": {
+                        ultimo_html = `<${tag}>${content}</${tag}>`
                         const list_contents: string[] = []
                         $(el).find("li").map((_i, el) => list_contents.push($(el).html() as string))
                         renders.push(
@@ -56,35 +86,38 @@ const App: React.FunctionComponent<IProps> = async ({ params: { id } }) => {
                         break
                     }
                     case "ol": {
+                        ultimo_html = `<${tag}>${content}</${tag}>`
                         const list_contents: string[] = []
-                        $(el).find("li").map((_i, el) => list_contents.push($(el).text()))
+                        $(el).find("li").map((_i, el) => list_contents.push($(el).html() as string))
                         renders.push(
                             <ol key={i}>
-                                {list_contents.map((content, i) => <li key={`${i}_${content}`} >{content}</li>)}
+                                {list_contents.map((content, i) => (
+                                    <li
+                                        key={`${i}_${content}`}
+                                        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+                                        dangerouslySetInnerHTML={{
+                                            __html: content as string,
+                                        }}
+                                    />
+                                ))}
                             </ol>
                         )
                         break
                     }
                     case "h1":
-                        renders.push(<h1 key={i} className='text-red-500 dark:text-violet-600'>{text}</h1>)
-                        break
                     case "h2":
-                        renders.push(<h2 key={i} className='text-red-500 dark:text-violet-600'>{text}</h2>)
-                        break
                     case "h3":
-                        renders.push(<h3 key={i} className='text-red-500 dark:text-violet-600'>{text}</h3>)
-                        break
                     case "h4":
-                        renders.push(<h4 key={i} className='text-red-500 dark:text-violet-600'>{text}</h4>)
-                        break
                     case "h5":
-                        renders.push(<h5 key={i} className='text-red-500 dark:text-violet-600'>{text}</h5>)
-                        break
                     case "h6":
-                        renders.push(<h6 key={i} className='text-red-500 dark:text-violet-600'>{text}</h6>)
+                        ultimo_html = `<${tag}>${content}</${tag}>`
+                        renders.push(
+                            React.createElement(tag, { key: i, className: 'text-red-500 dark:text-violet-600' }, text)
+                        );
                         break
                     case "li":
                     case "b":
+                        ultimo_html = `<${tag}>${content}</${tag}>`
                         break
                     default: {
                         console.log({

@@ -22,7 +22,7 @@ export async function googleGenerateStep({ etapa, titulo, obsservation }: Google
         const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
         const generationConfig = {
-            temperature: 0.25,
+            temperature: 0.1,
             topK: 40,
             topP: 0,
             maxOutputTokens: 10000,
@@ -48,8 +48,18 @@ export async function googleGenerateStep({ etapa, titulo, obsservation }: Google
         ];
 
         const prompt = obsservation ?
-            `Instruções: Não use Markdown, use html por exemplo <h1> para titulos <h2> para subtitulos <p> para paragrafos <code> para codigos | bash ou qualquer outra linguagem e assim por diante você não precisa iniciar com <!DOCTYPE html> e nem da tag html, você é um criador de ebooks, vou te pedir coisas por etapas.\n\nImportante!: ${obsservation}\n\nTema do ebook: ${titulo}\nEtapa: ${etapa} \n\n`
-            : `Instruções: Não use Markdown, use html por exemplo <h1> para titulos <h2> para subtitulos <p> para paragrafos, <code> para codigos | bash ou qualquer outra linguagem e assim por diante você não precisa iniciar com <!DOCTYPE html> e nem da tag html, você é um criador de ebooks, vou te pedir coisas por etapas.\n\nTema do ebook: ${titulo}\nEtapa: ${etapa} \n\n`
+            `Instruções: Não use Markdown, use HTML. Por exemplo, <h1> para títulos, <h2> para subtítulos, <p> para parágrafos, <code> para destacar pastas ou coisas desse gênero. Use a tag <codigo> quando for usar exemplos de codigo ou templates, Use a tag <comando> quando for destacar comandos.
+            Não é necessário iniciar com <!DOCTYPE html> e nem com a tag html. Você é um criador de ebooks, vou te pedir Paginas por etapas.
+            Importante!: ${obsservation}
+            
+            Tema do ebook: ${titulo}
+            Etapa: ${etapa}
+            `
+            : `Instruções: Não utilize Markdown. Utilize HTML, por exemplo, <h1> para títulos, <h2> para subtítulos, <p> para parágrafos, <code> para destacar pastas ou coisas desse gênero. Use a tag <codigo> quando for usar exemplos de codigo ou templates, Use a tag <comando> quando for destacar comandos.
+            Não é necessário iniciar com <!DOCTYPE html> e nem com a tag html. Você é um criador de ebooks, vou te pedir Paginas por etapas.
+            Tema do ebook: ${titulo}
+            Etapa: ${etapa}
+            `
         const parts = [
             { text: prompt },
         ];
