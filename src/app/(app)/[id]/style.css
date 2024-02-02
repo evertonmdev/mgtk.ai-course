@@ -1,0 +1,8 @@
+b {
+    @apply text-red-500 dark:text-violet-600;
+}
+
+code {
+    @apply text-blue-500 dark:text-red-600 before:!content-none after:!content-none pr-1;
+}
+
