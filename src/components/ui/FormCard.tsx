@@ -34,7 +34,8 @@ const FormCard: React.FunctionComponent = () => {
             const res = await createCourse_C(data)
 
             toast.info("ATENÇÃO!!!", {
-                description: "Devido às restrições técnicas da plataforma, o processo de criação do curso pode demandar um pouco mais de tempo. Por favor, evite fechar a aba até que o curso esteja completamente pronto para garantir uma experiência sem contratempos!"
+                description: "Devido às restrições técnicas da plataforma, o processo de criação do curso pode demandar um pouco mais de tempo. Por favor, evite fechar a aba até que o curso esteja completamente pronto para garantir uma experiência sem contratempos!",
+                duration: 15000
             })
 
             if (res?.stack.id) {
