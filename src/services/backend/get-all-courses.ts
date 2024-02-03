@@ -25,8 +25,10 @@ export type getAllCoursesType = ({
 } & {
     id: string;
     tema: string;
-    observacao: string;
-    status: IStackStatus;
+    title: string | null;
+    descricao: string | null;
+    observacao: string | null;
+    status: string;
     created_at: Date;
     updated_at: Date;
 })[]

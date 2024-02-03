@@ -1,4 +1,5 @@
 import { getCourse } from '@/services/backend/get-course';
+import { Code } from '@nextui-org/react';
 import * as cheerio from 'cheerio';
 import * as React from 'react';
 import './style.css';
@@ -52,10 +53,9 @@ const App: React.FunctionComponent<IProps> = async ({ params: { id } }) => {
                         ultimo_html = `<${tag}>${content}</${tag}>`
                         renders.push(
                             <pre key={i}>
-
-                                <code >
+                                <Code>
                                     {content?.trim()}
-                                </code>
+                                </Code>
                             </pre>
                         )
                         break
@@ -64,9 +64,9 @@ const App: React.FunctionComponent<IProps> = async ({ params: { id } }) => {
                         ultimo_html = `<${tag}>${content}</${tag}>`
                         renders.push(
                             <pre key={i}>
-                                <code>
+                                <Code>
                                     {text}
-                                </code>
+                                </Code>
                             </pre>
                         )
                         break

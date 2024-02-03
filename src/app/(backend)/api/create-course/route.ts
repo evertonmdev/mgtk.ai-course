@@ -1,6 +1,5 @@
 "use server";
 import { createCourse } from "@/services/backend/create-course";
-import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 

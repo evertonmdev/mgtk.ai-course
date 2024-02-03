@@ -9,7 +9,17 @@ import { useRenderCell } from '../modules/Table/renderCell';
 const TableCourses: React.FunctionComponent = () => {
   const { courses } = React.useContext(RootContext)
   const { renderCell } = useRenderCell()
-  const cols = Object.keys({ ...courses?.[0], actions: null } || {}).filter((col) => col !== "updated_at")
+  // const cols = Object.keys({ ...courses?.[0], informacoes: null, actions: null } || {}).filter((col) => {
+  //   return col !== "id" && col !== "updated_at" && col !== "descricao" && col !== "title" && col !== "observacao" && col !== "created_at"
+  // })
+
+  const cols = [
+    "tema",
+    "etapas",
+    "informacoes",
+    "status",
+    "actions",
+  ]
 
   const refdiv = React.useRef<HTMLElement>(null)
 
@@ -40,9 +50,7 @@ const TableCourses: React.FunctionComponent = () => {
           <TableBody emptyContent="Nenhuma task" items={courses || []}>
             {
               (item) => (
-                <TableRow key={item.id} onClick={() => {
-                  window.location.href = `/${item.id}`
-                }}>
+                <TableRow key={item.id}>
                   {/* biome-ignore lint/suspicious/noExplicitAny: <explanation> */}
                   {cols.map((col: any, i) => <TableCell align="center" key={`${i}_${col}`}>{renderCell(item, col)}</TableCell>)}
                 </TableRow>

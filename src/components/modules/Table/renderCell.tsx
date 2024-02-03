@@ -1,39 +1,40 @@
 import { getAllCoursesType } from '@/services/backend/get-all-courses';
 import * as React from 'react';
-;
-import IdContent from './IdContents';
+
+import { formatDate } from '@/lib/form-date';
+import { Accordion, AccordionItem, Chip, Tooltip } from '@nextui-org/react';
 import ActionsColumn from './actionsColumn';
-import CreatAtColumn from './createdAtColumn';
 import EtapasColumn from './etapasColumn';
+import InfoColumn from './infoColumn';
 import StatusColumn from './statusColumn';
 
 export const useRenderCell = () => {
-    const renderCell = React.useCallback((course: getAllCoursesType[0], columnKey: keyof getAllCoursesType[0] | "actions") => {
+    const renderCell = React.useCallback((course: getAllCoursesType[0], columnKey: "tema" | "informacoes" | "actions" | "etapas" | "status") => {
         switch (columnKey) {
-            case "id":
+            case "informacoes":
+                return <InfoColumn course={course} />
+            case "tema": {
                 return (
-                    <IdContent id={course.id} />
-                )
-            case "tema":
-                return (
-                    <p>{course.tema}</p>
-                )
-            case "observacao":
-                return (
-                    <p>{course.observacao || "nenhuma"}</p>
-                )
+                    <Tooltip
+                        closeDelay={0}
+                        content={course.tema}
+                    >
+                        <p className="line-clamp-2">
+                            {course.tema}
+                        </p>
+                    </Tooltip>
+                );
+            }
             case "status":
                 return (
                     <StatusColumn status={course.status} />
                 )
-            case "created_at":
-                return <CreatAtColumn data={course.created_at} />
             case "etapas":
                 return <EtapasColumn etapas={course.etapas} />
             case "actions":
                 return <ActionsColumn id={course.id} name={course.tema} />
             default:
-                return course?.[columnKey]?.toString() || "N/A"
+                return course?.[columnKey] || "N/A"
         }
     }, [])
 

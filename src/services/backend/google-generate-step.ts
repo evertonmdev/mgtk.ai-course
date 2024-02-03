@@ -15,9 +15,10 @@ interface GoogleGenerateStepProps {
     titulo: string;
     obsservation?: string | null;
     stack_id: string;
+    temperature?: number;
 }
 
-export async function googleGenerateStep({ etapa, titulo, obsservation, stack_id }: GoogleGenerateStepProps) {
+export async function googleGenerateStep({ etapa, titulo, obsservation, stack_id, temperature }: GoogleGenerateStepProps) {
     try {
         const old_data = await prisma.etapas.findMany({
             where: {
@@ -36,9 +37,9 @@ export async function googleGenerateStep({ etapa, titulo, obsservation, stack_id
         const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
         const generationConfig = {
-            temperature: 0.35,
+            temperature: temperature ? temperature : 0.35,
             topK: 40,
-            topP: 0.3,
+            topP: temperature ? (temperature / 10) : 0.1,
             maxOutputTokens: 10000,
         };
 
@@ -80,9 +81,6 @@ export async function googleGenerateStep({ etapa, titulo, obsservation, stack_id
             Etapa: ${etapa}
             `
 
-
-        console.log(old_data_text)
-
         const parts = [
             { text: `${old_data_text} \n\n ${prompt}` },
         ];
@@ -95,8 +93,9 @@ export async function googleGenerateStep({ etapa, titulo, obsservation, stack_id
 
         const response = result.response;
         return response.text();
-    } catch (error) {
-        console.log(error);
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    } catch (error: any) {
+        console.log(error.message)
         return error;
     }
 }

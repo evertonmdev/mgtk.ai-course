@@ -8,17 +8,18 @@ interface IEtapasColumnProps {
 
 const EtapasColumn: React.FunctionComponent<IEtapasColumnProps> = ({ etapas }) => {
     return (
-        <Tooltip placement="left" className="cursor-default" closeDelay={0} content={<Card>
-            <CardBody>
+        <Tooltip placement="left" className="cursor-default" closeDelay={0} content={
+            <div className='flex flex-col p-2'>
                 {
+
                     etapas.map((etapa, i) => (
                         <p key={`${i}_${etapa.nome}`} className="text-xs">
                             {etapa.nome}
                         </p>
                     ))
                 }
-            </CardBody>
-        </Card>}>
+            </div>
+        }>
             <Chip className="max-[100px] text-xs cursor-default" variant="dot" color="success">
                 {
                     etapas.length

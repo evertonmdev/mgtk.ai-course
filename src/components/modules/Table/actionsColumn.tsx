@@ -1,7 +1,7 @@
 import { deleteCourse_C } from '@/services/client/delete-course';
 import { downloadCourse_C } from '@/services/client/download-course';
 import { Button, Tooltip } from '@nextui-org/react';
-import { Download, Trash } from 'lucide-react';
+import { BookOpen, Download, Trash } from 'lucide-react';
 import * as React from 'react';
 import { toast } from 'sonner';
 import { RootContext } from '../Contexts/RootContext';
@@ -14,7 +14,7 @@ interface IActionsColumnProps {
 const ActionsColumn: React.FunctionComponent<IActionsColumnProps> = ({ id, name }) => {
     const { triggerReload } = React.useContext(RootContext)
     return (
-        <div className='w-full flex gap-1 justify-center items-center'>
+        <div className='w-full flex gap-1 justify-start items-center'>
             <Tooltip content="Deletar" color='danger'>
 
                 <Button onClick={() => {
@@ -55,6 +55,13 @@ const ActionsColumn: React.FunctionComponent<IActionsColumnProps> = ({ id, name 
                     toast.info("Download iniciado!")
                 }} size="sm" isIconOnly color="secondary" variant="flat" >
                     <Download size={15} />
+                </Button>
+            </Tooltip>
+            <Tooltip content="Visualizar" color='success'>
+                <Button size="sm" onClick={() => {
+                    window.open(`/${id}`, "_blank")
+                }} isIconOnly color="secondary" variant="flat" >
+                    <BookOpen size={15} />
                 </Button>
             </Tooltip>
         </div >

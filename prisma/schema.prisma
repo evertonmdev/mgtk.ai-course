@@ -13,6 +13,8 @@ datasource db {
 model Cursos {
   id         String   @id @default(cuid())
   tema       String
+  title      String?  @db.VarChar(255)
+  descricao  String?  @db.LongText
   observacao String?
   status     String   @default("Fazendo...")
   etapas     Etapas[]
