@@ -32,6 +32,11 @@ const FormCard: React.FunctionComponent = () => {
         try {
             setStatus((prev) => ({ ...prev, active: true }))
             const res = await createCourse_C(data)
+
+            toast.info("ATENÇÃO!!!", {
+                description: "Devido às restrições técnicas da plataforma, o processo de criação do curso pode demandar um pouco mais de tempo. Por favor, evite fechar a aba até que o curso esteja completamente pronto para garantir uma experiência sem contratempos!"
+            })
+
             if (res?.stack.id) {
                 await startStack_C({ id: res?.stack?.id })
 
@@ -85,7 +90,7 @@ const FormCard: React.FunctionComponent = () => {
                         !status.active ? (
                             <>
                                 <Input
-                                    {...register("tema")}
+                                    {...register("tema", { required: true })}
                                     label="Tema do curso"
                                 />
                                 <Input
