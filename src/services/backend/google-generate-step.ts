@@ -62,24 +62,22 @@ export async function googleGenerateStep({ etapa, titulo, obsservation, stack_id
             },
         ];
 
-        const prompt = obsservation ?
-            `Instruções: Não use Markdown, use HTML. Por exemplo, <h1> para títulos, <h2> para subtítulos, <p> para parágrafos, <code> para destacar pastas ou coisas desse gênero. Use a tag <codigo> quando for usar exemplos de codigo ou templates, Use a tag <comando> quando for destacar comandos.
-            Não é necessário iniciar com <!DOCTYPE html> e nem com a tag html. Você é um criador de ebooks, vou te pedir Paginas por etapas.
-            Importante!: ${obsservation} 
-            Importante!: Seja Original em seu conteudo, não é necessário usar codigo se o tema não tem nada haver com codigo
-            Importante!: Continue o contexto! não use coisas como "clique aqui para continuar para proxima etapa" ou "clique aqui para ir para a proxima etapa"
+        const prompt = `Instruções: Utilize HTML para formatar o texto conforme as seguintes diretrizes: <h1> para títulos, <h2> para subtítulos, <p> para parágrafos, <code> para destacar pastas ou comandos. Use a tag <codigo> ao apresentar exemplos de código ou templates, e <comando> para destacar comandos.
+
+        Lembre-se das seguintes orientações:
         
-            Tema do ebook: ${titulo}
-            Etapa: ${etapa}
-            `
-            : `Instruções: Não utilize Markdown. Utilize HTML, por exemplo, <h1> para títulos, <h2> para subtítulos, <p> para parágrafos, <code> para destacar pastas ou coisas desse gênero. Use a tag <codigo> quando for usar exemplos de codigo ou templates, Use a tag <comando> quando for destacar comandos.
-            Não é necessário iniciar com <!DOCTYPE html> e nem com a tag html. Você é um criador de ebooks, vou te pedir Paginas por etapas.
-            Importante!: Seja Original em seu conteudo, não é necessário usar codigo se o tema não tem nada haver com codigo
-            Importante!: Continue o contexto! não use coisas como "clique aqui para continuar para proxima etapa" ou "clique aqui para ir para a proxima etapa"
+        Evite repetir conteúdo em excesso entre as páginas para manter o interesse do leitor.
+        Seja original e criativo em seu conteúdo, adaptando-o ao tema proposto.
+        Mantenha o contexto ao transitar entre as etapas do ebook.
+        Não utilize código se o tema não estiver relacionado a esse contexto.
+        Evite instruções genéricas ou sem propósito direto.
+        Não é necessário iniciar com <!DOCTYPE html> e nem com a tag html.
+        ${obsservation ? `Importante!: ${obsservation}` : ''}
         
-            Tema do ebook: ${titulo}
-            Etapa: ${etapa}
-            `
+        Tema do ebook: ${titulo}
+        Etapa: ${etapa} 
+        `
+
 
         const parts = [
             { text: `${old_data_text} \n\n ${prompt}` },

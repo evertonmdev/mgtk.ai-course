@@ -16,6 +16,12 @@ interface GoogleGenerateStepProps {
 
 export async function googleGenerateInfos({ stack_id }: GoogleGenerateStepProps) {
     try {
+        const data = await prisma.cursos.findUnique({
+            where: {
+                id: stack_id
+            }
+        })
+
         const old_data = await prisma.etapas.findMany({
             where: {
                 curso_id: stack_id
@@ -64,6 +70,10 @@ export async function googleGenerateInfos({ stack_id }: GoogleGenerateStepProps)
             A descrição deve ser uma introdução ao conteúdo do ebook.
 
             use o idioma do ebook/curso
+
+            Tema: ${data?.tema} 
+            Importante!: Gere um JSON válido!
+            Importante!: ${data?.observacao || "nada"}
             
             Exemplo de titulo: "Aprenda a criar um ebook"
             Exemplo de descrição: "Neste ebook você vai aprender a criar um ebook, desde a escolha do tema até a publicação."

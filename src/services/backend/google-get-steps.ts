@@ -41,11 +41,18 @@ export async function googleGetSteps({ thema, observations }: GoogleGetStepsProp
             },
         ];
 
-        const prompt = observations ?
-            `Estou criando um ebook sobre '${thema}', me traga uma lista com as seções do ebook.\nnão use markdown, apenas texto puro\nme traga apenas a lista, não precisa me explicar o porque e mantenha a lista numerada\n\nExemplo: Introdução, Desenvolvimento, etc...
-            Importante!: Seja Original em seu conteudo
-            \n\nImportante!: ${observations}\n\nLista: \n`
-            : `Estou criando um ebook sobre '${thema}', me traga uma lista com as seções do ebook.\nnão use markdown, apenas texto puro\nme traga apenas a lista, não precisa me explicar o porque e mantenha a lista numerada\n\nExemplo: Introdução, Desenvolvimento, etc...\n\nLista: \n`
+        const prompt =
+            `Estou organizando um ebook sobre '${thema}'. Gostaria de uma lista numerada com as seções do ebook.
+            
+            Regras:
+            
+            Use apenas texto simples, sem markdown.
+            Forneça apenas a lista numerada, sem explicações.
+            Seja original em suas sugestões.
+            ${observations ? `Importante!: ${observations}.` : ''}
+            
+            Lista Numerada:
+            `
         const parts = [
             { text: prompt },
         ];
