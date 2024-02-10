@@ -69,7 +69,8 @@ export async function googleGenerateStep({ etapa, titulo, obsservation, stack_id
         Chapter: ${etapa}
         ${obsservation ? `Observations: Incorporate these additional observations: ${obsservation}` : ''}
         
-        Important: Use HTML to format the text according to the following guidelines: <h1> for headings , <h2> for subheadings , <p> for paragraphs , <code> to highlight folders or commands. Use the <code> tag when presenting code examples or templates, and <comando> to highlight commands.
+        Important: Be original, creative and concise
+        Important: Use HTML to format the text according to the following guidelines: <h1> for headings , <h2> for subheadings , <p> for paragraphs , <code> to highlight folders or commands. Use the <codigo> tag when presenting code examples or templates, and <comando> to highlight commands.
         `
 
         const parts = [

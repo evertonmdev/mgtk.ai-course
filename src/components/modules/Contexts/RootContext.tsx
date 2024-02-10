@@ -17,12 +17,17 @@ export const RootContext = createContext({} as IRootContext)
 
 export const RootContextProvider: React.FC<IRootContextProvider> = ({ children }) => {
     const [courses, setCourses] = React.useState<getAllCoursesType | null>(null)
+    const [loaded, setLoaded] = React.useState(false)
 
     useEffect(() => {
-        triggerReload()
-    }, [])
+        if (!loaded) {
+            setLoaded(true);
+            triggerReload();
+        }
+    }, [loaded])
 
     const triggerReload = () => {
+        console.log("Chamou")
         getAllCourses_C().then((data) => {
             setCourses(data);
         }

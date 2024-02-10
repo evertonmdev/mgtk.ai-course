@@ -24,7 +24,7 @@ export default prisma
 
 prisma.$on("query", (e) => {
     // console.log("\n\n")
-    // console.log(`${chalk.green("Query")}: ${e.query}`)
+    console.log(`${chalk.green("Query")}: ${e.query}`)
     // console.log(`${chalk.green("Params")}: ${e.params}`)
     console.log(`${chalk.green("New Query")}`)
     console.log(`${chalk.green("Duration")}: ${e.duration}ms`)
