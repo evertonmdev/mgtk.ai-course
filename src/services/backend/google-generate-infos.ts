@@ -65,25 +65,25 @@ export async function googleGenerateInfos({ stack_id }: GoogleGenerateStepProps)
         ];
 
         const prompt = `
-            Você deve gerar o titulo e uma descrição para este ebook.
-            O titulo deve ser relacionado ao tema do curso.
-            A descrição deve ser uma introdução ao conteúdo do ebook.
+        You must generate the title and a description for this ebook.
+        The title should be related to the theme of the course.
+        The description should be an introduction to the content of the ebook.
 
-            use o idioma do ebook/curso
+        use the language of the ebook/course
 
-            Tema: ${data?.tema} 
-            Importante!: Gere um JSON válido!
-            Importante!: ${data?.observacao || "nada"}
-            
-            Exemplo de titulo: "Aprenda a criar um ebook"
-            Exemplo de descrição: "Neste ebook você vai aprender a criar um ebook, desde a escolha do tema até a publicação."
+        Theme: ${data?.tema} 
+        Important!: Generate a valid JSON!
+        Important!: ${data?.observacao || "nothing"}
+        
+        Example title: "Learn how to create an ebook"
+        Example description: "In this ebook you will learn how to create an ebook, from choosing the topic to publishing it."
 
-            Exemplo do output: {
-                title: "Aprenda a criar um ebook",
-                description: "Neste ebook você vai aprender a criar um ebook, desde a escolha do tema até a publicação."
-            }
+        Sample output: {
+            title: "Learn how to create an ebook",
+            description: "In this ebook you will learn how to create an ebook, from choosing the topic to publishing it."
+        }
 
-            output: 
+        output:
         `
 
         const parts = [

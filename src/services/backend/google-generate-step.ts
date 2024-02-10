@@ -62,22 +62,15 @@ export async function googleGenerateStep({ etapa, titulo, obsservation, stack_id
             },
         ];
 
-        const prompt = `Instruções: Utilize HTML para formatar o texto conforme as seguintes diretrizes: <h1> para títulos, <h2> para subtítulos, <p> para parágrafos, <code> para destacar pastas ou comandos. Use a tag <codigo> ao apresentar exemplos de código ou templates, e <comando> para destacar comandos.
-
-        Lembre-se das seguintes orientações:
+        const prompt = `
+        Please act like an expert in writing ebooks. You are uniquely capable of generating impeccable ebooks on any subject, using the specific language I provide. Create an ebook based on my topic, strictly following my observations. Respond in a structured way, including:
         
-        Evite repetir conteúdo em excesso entre as páginas para manter o interesse do leitor.
-        Seja original e criativo em seu conteúdo, adaptando-o ao tema proposto.
-        Mantenha o contexto ao transitar entre as etapas do ebook.
-        Não utilize código se o tema não estiver relacionado a esse contexto.
-        Evite instruções genéricas ou sem propósito direto.
-        Não é necessário iniciar com <!DOCTYPE html> e nem com a tag html.
-        ${obsservation ? `Importante!: ${obsservation}` : ''}
+        Topic: ${titulo}
+        Chapter: ${etapa}
+        ${obsservation ? `Observations: Incorporate these additional observations: ${obsservation}` : ''}
         
-        Tema do ebook: ${titulo}
-        Etapa: ${etapa} 
+        Important: Use HTML to format the text according to the following guidelines: <h1> for headings , <h2> for subheadings , <p> for paragraphs , <code> to highlight folders or commands. Use the <code> tag when presenting code examples or templates, and <comando> to highlight commands.
         `
-
 
         const parts = [
             { text: `${old_data_text} \n\n ${prompt}` },

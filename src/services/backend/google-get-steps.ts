@@ -42,16 +42,16 @@ export async function googleGetSteps({ thema, observations }: GoogleGetStepsProp
         ];
 
         const prompt =
-            `Estou organizando um ebook sobre '${thema}'. Gostaria de uma lista numerada com as seções do ebook.
+            `I'm organizing an ebook about '${thema}'. I would like a numbered list with the sections of the ebook.
             
-            Regras:
+            Rules:
             
-            Use apenas texto simples, sem markdown.
-            Forneça apenas a lista numerada, sem explicações.
-            Seja original em suas sugestões.
-            ${observations ? `Importante!: ${observations}.` : ''}
+            Use only plain text, no markdown.
+            Provide only the numbered list, no explanations.
+            Be original in your suggestions.
+            ${observations ? `Important!: ${observations}.` : ''}
             
-            Lista Numerada:
+            Numbered List:
             `
         const parts = [
             { text: prompt },
