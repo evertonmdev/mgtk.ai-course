@@ -49,7 +49,7 @@ const App: React.FunctionComponent<IProps> = async ({ params: { id } }) => {
                             <pre key={i} dangerouslySetInnerHTML={{ __html: content?.trim() as string }} />
                         )
                         break
-                    case "codigo": {
+                    case "codigoxx": {
                         ultimo_html = `<${tag}>${content}</${tag}>`
                         renders.push(
                             <pre key={i}>
@@ -60,7 +60,7 @@ const App: React.FunctionComponent<IProps> = async ({ params: { id } }) => {
                         )
                         break
                     }
-                    case "comando":
+                    case "comandoxx":
                         ultimo_html = `<${tag}>${content}</${tag}>`
                         renders.push(
                             <Code>

@@ -6,7 +6,7 @@ import {
     HarmCategory,
 } from "@google/generative-ai";
 
-const MODEL_NAME = "gemini-1.0-pro";
+const MODEL_NAME = "gemini-1.0-pro-latest";
 const API_KEY = Env.GOOGLE_API_KEY;
 
 
@@ -40,7 +40,7 @@ export async function googleGenerateStep({ etapa, titulo, obsservation, stack_id
             temperature: temperature ? temperature : 0.35,
             topK: 40,
             topP: temperature ? (temperature / 10) : 0.1,
-            maxOutputTokens: 10000,
+            maxOutputTokens: 20000,
         };
 
         const safetySettings = [
@@ -69,8 +69,10 @@ export async function googleGenerateStep({ etapa, titulo, obsservation, stack_id
         Chapter: ${etapa}
         ${obsservation ? `Observations: Incorporate these additional observations: ${obsservation}` : ''}
         
-        Important: Be original, creative and concise
-        Important: Use HTML to format the text according to the following guidelines: <h1> for headings , <h2> for subheadings , <p> for paragraphs , <code> to highlight folders or commands. Use the <codigo> tag when presenting code examples or templates, and <comando> to highlight commands.
+        Important!!: Be original, creative and concise
+        Important!!: Use HTML to format the text according to the following guidelines: <h1> for headings , <h2> for subheadings , <p> for paragraphs , <code> to highlight folders or commands. Use the <codigoxx> tag when presenting code examples or templates, and <comandoxx> to highlight commands.
+
+        Remember: Use HTML to format the text according to the following guidelines: <h1> for headings , <h2> for subheadings , <p> for paragraphs , <code> to highlight folders or commands. Use the <codigoxx> tag when presenting code examples or templates, and <comandoxx> to highlight commands.
         `
 
         const parts = [
