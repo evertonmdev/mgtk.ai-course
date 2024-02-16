@@ -6,7 +6,7 @@ import {
     HarmCategory,
 } from "@google/generative-ai";
 
-const MODEL_NAME = "gemini-pro";
+const MODEL_NAME = "gemini-1.0-pro";
 const API_KEY = Env.GOOGLE_API_KEY;
 
 
