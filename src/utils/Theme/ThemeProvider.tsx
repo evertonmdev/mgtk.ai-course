@@ -1,12 +1,24 @@
 "use client";
 
-import { ThemeProvider as NextThemeProvider } from 'next-themes';
-import React from 'react';
+import useGlobalStorage from "@/components/modules/Storages/GlobalStorage";
+import { ThemeProvider as NextThemeProvider } from "next-themes";
+import React, { useEffect } from "react";
 
 interface IThemeProvider {
-    children: React.ReactNode
+	children: React.ReactNode;
 }
 
 export const ThemeProvider: React.FC<IThemeProvider> = ({ children }) => {
-    return <NextThemeProvider defaultTheme={"light"} attribute='class'> {children} </NextThemeProvider>
-}
+	const { triggerReload } = useGlobalStorage();
+
+	useEffect(() => {
+		triggerReload();
+	}, [triggerReload]);
+
+	return (
+		<NextThemeProvider defaultTheme={"light"} attribute="class">
+			{" "}
+			{children}{" "}
+		</NextThemeProvider>
+	);
+};

@@ -6,15 +6,15 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model Cursos {
   id         String   @id @default(cuid())
   tema       String
-  title      String?
-  descricao  String?
+  title      String?  @db.VarChar(255)
+  descricao  String?  @db.LongText
   observacao String?
   status     String   @default("Fazendo...")
   etapas     Etapas[]
@@ -25,7 +25,7 @@ model Cursos {
 model Etapas {
   id    Int     @id @default(autoincrement())
   nome  String
-  texto String?
+  texto String? @db.LongText
 
   Cursos     Cursos   @relation(fields: [curso_id], references: [id], onDelete: Cascade)
   curso_id   String

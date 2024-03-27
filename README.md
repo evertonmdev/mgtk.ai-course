@@ -1,36 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# EBook Generator
 
-## Getting Started
+## Como funciona
+- O projeto é um gerador de ebooks, com o uso de nextjs, prisma, sqlite, bunjs e api da gemini do google essa aplicação é capaz de gerar cursos
 
-First, run the development server:
+## Instalação
+- Para instalar o projeto basta clonar o repositório e rodar o comando `bun install` para instalar as dependencias
+- em seguida rodar o comando `bun prisma generate` para gerar o prisma client
+- e por fim rodar o comando `bun prisma migrate dev` para criar o banco de dados
+- e por fim rodar o comando `bun run dev` para rodar o projeto 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Como usar
+- Logo após a instalação basta acessar o endereço `http://localhost:3000` para acessar a aplicação
+- A aplicação é bem simples, basta inserir o tema do curso/ebook e clicar no botão gerar para criar um novo ebook
+- O ebook será gerado em formato pdf e disponibilizado para download
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+obs: Se deseja gerar um curso em português, adicione essa condição no campos "Adicionais" do formulário
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tecnologias
+- Nextjs
+- Prisma
+- Sqlite
+- Bunjs
+- Google Gemini API
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Infelizmente a Vercel não permite criar um projeto com sqlite, então para rodar o projeto é necessário clonar o repositório e rodar localmente
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Licença
+- Esse projeto é open source e está sobre a licença do MIT

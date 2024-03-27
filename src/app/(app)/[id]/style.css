@@ -7,7 +7,7 @@ strong {
 }
 
 
-li > a {
+li>a {
     @apply !text-blue-500 dark:!text-red-600;
 }
 
@@ -16,9 +16,9 @@ pre {
 
 }
 
-pre > code {
-    @apply  !text-gray-100 dark:!text-foreground;
-} 
+pre>code {
+    @apply !text-gray-100 dark:!text-foreground;
+}
 
 code {
     @apply text-blue-500 dark:text-red-600 before:!content-none after:!content-none px-1;

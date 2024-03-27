@@ -6,10 +6,10 @@
     .sonnes {
         @apply bg-red-600 text-white;
     }
- 
-/* width */
-::-webkit-scrollbar {
-    width: 0px;
-  }
-  
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 0px;
+    }
+
 }
