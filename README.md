@@ -6,7 +6,7 @@
 ## Instalação
 - Para instalar o projeto basta clonar o repositório e rodar o comando `bun install` para instalar as dependencias
 - em seguida rodar o comando `bun prisma generate` para gerar o prisma client
-- e por fim rodar o comando `bun prisma migrate dev` para criar o banco de dados
+- logo após rode o comando `bun prisma migrate dev` para criar o banco de dados
 - e por fim rodar o comando `bun run dev` para rodar o projeto 
 
 ## Como usar
