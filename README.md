@@ -1,3 +1,4 @@
+*⚠️ A plataforma exige um tempo mínimo de 1 minuto para o processamento do backend, o que excede o limite de resposta da Vercel. Portanto, para rodar este projeto com SQLite e server actions, é necessário clonar o repositório e executá-lo localmente. ⚠️*
 # EBook Generator
 
 ## Como funciona
@@ -23,7 +24,6 @@ obs: Se deseja gerar um curso em português, adicione essa condição no campos 
 - Bunjs
 - Google Gemini API
 
-Infelizmente a Vercel não permite criar um projeto com sqlite, então para rodar o projeto é necessário clonar o repositório e rodar localmente
 
 ## Licença
 - Esse projeto é open source e está sobre a licença do MIT
